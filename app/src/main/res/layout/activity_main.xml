@@ -80,7 +80,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="hellotext" />
+        app:constraint_referenced_ids="hellotext,tvRef"
+        tools:layout_editor_absoluteY="232dp" />
 
     <ImageView
         android:id="@+id/ivLikes"
@@ -99,7 +100,7 @@
         android:id="@+id/tvLikes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
         android:text="@string/likes"
         app:layout_constraintBottom_toBottomOf="@+id/ivLikes"
         app:layout_constraintEnd_toStartOf="@+id/ivShares"
@@ -111,7 +112,7 @@
         android:id="@+id/ivShares"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
         android:contentDescription="@string/shares"
         app:layout_constraintBottom_toBottomOf="@id/tvLikes"
         app:layout_constraintEnd_toStartOf="@+id/tvShares"
@@ -123,7 +124,7 @@
         android:id="@+id/tvShares"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
         android:text="@string/shares"
         app:layout_constraintBottom_toBottomOf="@+id/ivShares"
         app:layout_constraintEnd_toEndOf="parent"
@@ -136,6 +137,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:contentDescription="@string/views"
         app:layout_constraintEnd_toStartOf="@+id/tvViews"
         app:layout_constraintHorizontal_bias="0.96"
         app:layout_constraintHorizontal_chainStyle="packed"
@@ -148,11 +150,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/views"
-        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
         app:layout_constraintBottom_toBottomOf="@+id/ivViews"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/ivViews"
         app:layout_constraintTop_toTopOf="@+id/ivViews" />
+
+    <TextView
+        android:id="@+id/tvRef"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:autoLink="web"
+        android:clickable="true"
+        android:minHeight="48dp"
+        android:text="@string/ref"
+        android:textColor="#00838F"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/hellotext" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
