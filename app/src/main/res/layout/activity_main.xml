@@ -64,13 +64,14 @@
         app:layout_constraintTop_toBottomOf="@id/published" />
 
     <TextView
-        android:id="@+id/hellotext"
+        android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="12dp"
         android:text="@string/hellotext"
+        android:autoLink="web"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/barrier1" />
@@ -80,21 +81,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="hellotext,tvRef"
+        app:constraint_referenced_ids="content"
         tools:layout_editor_absoluteY="232dp" />
 
-    <ImageView
-        android:id="@+id/ivLikes"
+    <ImageButton
+        android:id="@+id/ibLikes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:contentDescription="@string/likes"
+        android:background="@android:color/transparent"
         app:layout_constraintEnd_toStartOf="@+id/tvLikes"
         app:layout_constraintHorizontal_bias="0.04"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/barrier2"
-        app:srcCompat="@drawable/ic_baseline_thumb_up_alt_24" />
+        app:srcCompat="@drawable/ic_outline_favorite_border_24" />
 
     <TextView
         android:id="@+id/tvLikes"
@@ -102,18 +104,19 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:text="@string/likes"
-        app:layout_constraintBottom_toBottomOf="@+id/ivLikes"
-        app:layout_constraintEnd_toStartOf="@+id/ivShares"
+        app:layout_constraintBottom_toBottomOf="@+id/ibLikes"
+        app:layout_constraintEnd_toStartOf="@+id/ibShares"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/ivLikes"
-        app:layout_constraintTop_toTopOf="@+id/ivLikes" />
+        app:layout_constraintStart_toEndOf="@+id/ibLikes"
+        app:layout_constraintTop_toTopOf="@+id/ibLikes" />
 
-    <ImageView
-        android:id="@+id/ivShares"
+    <ImageButton
+        android:id="@+id/ibShares"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:contentDescription="@string/shares"
+        android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="@id/tvLikes"
         app:layout_constraintEnd_toStartOf="@+id/tvShares"
         app:layout_constraintStart_toEndOf="@+id/tvLikes"
@@ -126,11 +129,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:text="@string/shares"
-        app:layout_constraintBottom_toBottomOf="@+id/ivShares"
+        app:layout_constraintBottom_toBottomOf="@+id/ibShares"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/ivShares"
-        app:layout_constraintTop_toTopOf="@+id/ivShares" />
+        app:layout_constraintStart_toEndOf="@+id/ibShares"
+        app:layout_constraintTop_toTopOf="@+id/ibShares" />
 
     <ImageView
         android:id="@+id/ivViews"
@@ -156,18 +159,5 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/ivViews"
         app:layout_constraintTop_toTopOf="@+id/ivViews" />
-
-    <TextView
-        android:id="@+id/tvRef"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:autoLink="web"
-        android:clickable="true"
-        android:minHeight="48dp"
-        android:text="@string/ref"
-        android:textColor="#00838F"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/hellotext" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
