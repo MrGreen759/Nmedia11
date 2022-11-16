@@ -5,4 +5,11 @@
     <string name="title">Нетология. Университет интернет-профессий будущего</string>
     <string name="hellotext">Привет, это новая Нетология! → http://netolo.gy/fyb</string>
     <string name="published">дата и время</string>
+    <string name="menu_remove">Удалить пост</string>
+    <string name="menu_add">Добавить пост</string>
+    <string name="menu_edit">Редактировать пост</string>
+    <string name="error_empty_content">Контент не должен быть пуст</string>
+    <string name="post_text">Текст поста</string>
+    <string name="description_save">Сохранить</string>
+    <string name="description_cancel">Отмена</string>
 </resources>
