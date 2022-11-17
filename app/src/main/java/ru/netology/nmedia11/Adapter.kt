@@ -72,6 +72,19 @@ class PostViewHolder (
                                 true
                             }
                             R.id.add -> {
+                                var epost = Post (
+                                    id = 0L,
+                                    author = "",
+                                    content = "",
+                                    published = "",
+                                    likes = 0,
+                                    shares = 0,
+                                    views = 0
+                                        )
+                                onEditListener(epost)
+                                true
+                            }
+                            R.id.edit -> {
                                 onEditListener(post)
                                 true
                             }
