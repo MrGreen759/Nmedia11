@@ -1,7 +1,12 @@
 package ru.netology.nmedia11
 
+import android.content.res.Resources
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 interface PostRepository {
     fun get(): LiveData<List<Post>>
@@ -70,7 +75,7 @@ class PostRepo: PostRepository {
             views = 2898
         )
     )
-    private var nextId = posts.size.toLong()
+    public var nextId = posts.size.toLong()
 
     private val data = MutableLiveData(posts)
 
@@ -96,14 +101,15 @@ class PostRepo: PostRepository {
         TODO("Not yet implemented")
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun save(post: Post) {
-        if (post.id == 0L) {
+        if ((post.id == 0L) || (post.id == -1L)) {
             // TODO: remove hardcoded author & published
             posts = listOf(
                 post.copy(
                     id = ++nextId,
-                    author = "Me",
-                    published = "now"
+                    author = "",
+                    published = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy в hh:mm"))
                 )
             ) + posts
             data.value = posts

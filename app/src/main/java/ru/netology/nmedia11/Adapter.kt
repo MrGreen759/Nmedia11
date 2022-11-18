@@ -73,7 +73,7 @@ class PostViewHolder (
                             }
                             R.id.add -> {
                                 var epost = Post (
-                                    id = 0L,
+                                    id = -1L,
                                     author = "",
                                     content = "",
                                     published = "",

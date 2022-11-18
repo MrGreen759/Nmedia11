@@ -63,5 +63,14 @@
         app:layout_constraintBottom_toTopOf="@id/save"
         app:srcCompat="@drawable/ic_outline_cancel_24"
         />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/edirGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:constraint_referenced_ids="content,save, cancel" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+
 

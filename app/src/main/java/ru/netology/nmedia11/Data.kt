@@ -1,5 +1,7 @@
 package ru.netology.nmedia11
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
@@ -34,6 +36,7 @@ class PostViewModel: ViewModel() {
     //fun addAndEdit(post: Post) = repository.save(post)
     fun remove(id: Long) = repository.remove(id)
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun save() {
         edited.value?.let {
             repository.save(it)
