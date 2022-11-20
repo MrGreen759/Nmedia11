@@ -1,6 +1,5 @@
 package ru.netology.nmedia11
 
-import android.content.res.Resources
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
@@ -12,7 +11,6 @@ interface PostRepository {
     fun get(): LiveData<List<Post>>
     fun likeById(id: Long)
     fun share(id: Long)
-    fun edit(id: Long)
     fun save(post: Post)
     fun remove(id: Long)
 }
@@ -75,11 +73,13 @@ class PostRepo: PostRepository {
             views = 2898
         )
     )
-    public var nextId = posts.size.toLong()
+    private var nextId = posts.size.toLong()
 
     private val data = MutableLiveData(posts)
 
     override fun get(): LiveData<List<Post>> = data
+
+
 
     // на кнопку "like"
     override fun likeById(id: Long) {
@@ -97,18 +97,13 @@ class PostRepo: PostRepository {
         data.value = posts
     }
 
-    override fun edit(id: Long) {
-        TODO("Not yet implemented")
-    }
-
+    // сохранение поста
     @RequiresApi(Build.VERSION_CODES.O)
     override fun save(post: Post) {
         if ((post.id == 0L) || (post.id == -1L)) {
-            // TODO: remove hardcoded author & published
             posts = listOf(
                 post.copy(
                     id = ++nextId,
-                    author = "",
                     published = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy в hh:mm"))
                 )
             ) + posts
@@ -122,6 +117,7 @@ class PostRepo: PostRepository {
         data.value = posts
     }
 
+    // удаление поста
     override fun remove(id: Long) {
         posts = posts.filter { it.id != id }
         data.value = posts

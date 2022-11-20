@@ -7,7 +7,6 @@ import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nmedia11.databinding.PostCardBinding
-import java.security.PrivateKey
 
 typealias OnLikeListener = (post: Post) -> Unit
 typealias OnShareListener = (post: Post) -> Unit
@@ -23,7 +22,13 @@ class PostsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val binding = PostCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return PostViewHolder(binding, onLikeListener, onShareListener, onRemoveListener, onEditListener)
+        return PostViewHolder(
+            binding,
+            onLikeListener,
+            onShareListener,
+            onRemoveListener,
+            onEditListener
+        )
     }
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
@@ -32,7 +37,7 @@ class PostsAdapter(
     }
 }
 
-class PostViewHolder (
+class PostViewHolder(
     private val binding: PostCardBinding,
     private val onLikeListener: OnLikeListener,
     private val onShareListener: OnShareListener,
@@ -72,9 +77,9 @@ class PostViewHolder (
                                 true
                             }
                             R.id.add -> {
-                                var epost = Post (
+                                val epost = Post (
                                     id = -1L,
-                                    author = "",
+                                    author = it.context.getString(R.string.title),
                                     content = "",
                                     published = "",
                                     likes = 0,
@@ -118,7 +123,7 @@ class PostViewHolder (
 
 }
 
-class PostDiffCallback(): DiffUtil.ItemCallback<Post>() {
+class PostDiffCallback: DiffUtil.ItemCallback<Post>() {
     override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {
         return oldItem.id == newItem.id
     }
