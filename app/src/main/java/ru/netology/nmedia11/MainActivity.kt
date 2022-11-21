@@ -22,13 +22,26 @@ class MainActivity : AppCompatActivity() {
         binding.edirGroup.visibility = View.GONE
 
         val viewModel: PostViewModel by viewModels()
-        val adapter = PostsAdapter (
-            { viewModel.likeById(it.id) },
-            { viewModel.share(it.id) },
-            { viewModel.remove(it.id) },
-            { viewModel.addAndEdit(it) }
-        )
+        val adapter = PostsAdapter (object : OnInteractionListener {
+            override fun onEdit(post: Post) {
+                viewModel.addAndEdit(post)
+            }
+
+            override fun onLike(post: Post) {
+                viewModel.likeById(post.id)
+            }
+
+            override fun onShare(post: Post) {
+                viewModel.share(post.id)
+            }
+
+            override fun onRemove(post: Post) {
+                viewModel.remove(post.id)
+            }
+        })
+
         binding.list.adapter = adapter
+
         viewModel.data.observe(this) { posts ->
             adapter.submitList(posts)
         }
@@ -79,4 +92,5 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
 }

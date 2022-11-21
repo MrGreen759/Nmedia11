@@ -8,27 +8,20 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nmedia11.databinding.PostCardBinding
 
-typealias OnLikeListener = (post: Post) -> Unit
-typealias OnShareListener = (post: Post) -> Unit
-typealias OnRemoveListener = (post: Post) -> Unit
-typealias OnEditListener = (post: Post) -> Unit
+interface OnInteractionListener {
+    fun onLike(post: Post) {}
+    fun onEdit(post: Post) {}
+    fun onShare(post: Post) {}
+    fun onRemove(post: Post) {}
+}
 
 class PostsAdapter(
-    private val onLikeListener: OnLikeListener /* = (post: ru.netology.nmedia11.Post) -> kotlin.Unit */,
-    private val onShareListener: OnShareListener /* = (post: ru.netology.nmedia11.Post) -> kotlin.Unit */,
-    private val onRemoveListener: OnRemoveListener,
-    private val onEditListener: OnEditListener
+    private val onInteractionListener: OnInteractionListener
 ) : androidx.recyclerview.widget.ListAdapter<Post, PostViewHolder> (PostDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val binding = PostCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return PostViewHolder(
-            binding,
-            onLikeListener,
-            onShareListener,
-            onRemoveListener,
-            onEditListener
-        )
+        return PostViewHolder(binding, onInteractionListener)
     }
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
@@ -39,10 +32,7 @@ class PostsAdapter(
 
 class PostViewHolder(
     private val binding: PostCardBinding,
-    private val onLikeListener: OnLikeListener,
-    private val onShareListener: OnShareListener,
-    private val onRemoveListener: OnRemoveListener,
-    private val onEditListener: OnEditListener
+    private val onInteractionListener: OnInteractionListener
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(post: Post) {
@@ -60,20 +50,22 @@ class PostViewHolder(
                 ibLikes.setImageResource(R.drawable.ic_outline_favorite_border_24)
             }
             ibLikes.setOnClickListener {
-                onLikeListener(post)
+                onInteractionListener.onLike(post)
             }
             ibShares.setOnClickListener {
                 val animZoom = AnimationUtils.loadAnimation(it.context, R.anim.scale_animation)
                 binding.ibShares.startAnimation(animZoom)
-                onShareListener(post)
+                onInteractionListener.onShare(post)
             }
+
+            // слушатель на кнопку "три точки"
             buttonMenu.setOnClickListener {
                 PopupMenu(it.context, it).apply {
                     inflate(R.menu.options_post)
                     setOnMenuItemClickListener { item ->
                         when (item.itemId) {
                             R.id.remove -> {
-                                onRemoveListener(post)
+                                onInteractionListener.onRemove(post)
                                 true
                             }
                             R.id.add -> {
@@ -86,11 +78,11 @@ class PostViewHolder(
                                     shares = 0,
                                     views = 0
                                         )
-                                onEditListener(epost)
+                                onInteractionListener.onEdit(epost)
                                 true
                             }
                             R.id.edit -> {
-                                onEditListener(post)
+                                onInteractionListener.onEdit(post)
                                 true
                             }
                             else -> false

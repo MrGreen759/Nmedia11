@@ -79,8 +79,6 @@ class PostRepo: PostRepository {
 
     override fun get(): LiveData<List<Post>> = data
 
-
-
     // на кнопку "like"
     override fun likeById(id: Long) {
         posts = posts.map {
