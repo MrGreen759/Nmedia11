@@ -27,49 +27,48 @@
         android:id="@+id/content"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="@string/post_text"
-        android:inputType="textMultiLine"
         android:background="@android:color/transparent"
-        android:padding="16dp"
+        android:hint="@string/post_text"
         android:importantForAutofill="no"
-        app:layout_constraintTop_toTopOf="@id/toolsTop"
+        android:inputType="textMultiLine"
+        android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/save"
         app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="@id/toolsTop" />
 
     <ImageButton
         android:id="@+id/save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/description_save"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:srcCompat="@drawable/ic_baseline_save_24"
-        />
+        app:srcCompat="@drawable/ic_baseline_save_24" />
 
     <ImageButton
         android:id="@+id/cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/description_cancel"
+        app:layout_constraintBottom_toTopOf="@id/save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/content"
-        app:layout_constraintBottom_toTopOf="@id/save"
-        app:srcCompat="@drawable/ic_outline_cancel_24"
-        />
+        app:srcCompat="@drawable/ic_outline_cancel_24" />
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/edirGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="visible"
-        app:constraint_referenced_ids="content,save, cancel" />
+        app:constraint_referenced_ids="content, save, cancel" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

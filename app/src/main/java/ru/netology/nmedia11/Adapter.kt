@@ -40,21 +40,22 @@ class PostViewHolder(
             author.text = post.author
             published.text = post.published
             content.text = post.content
-            tvLikes.text = convert(post.likes)
-            tvShares.text = convert(post.shares)
-            tvPostId.text = post.id.toString()
+            tvPostId.text = "ID: " + post.id.toString()
             tvViews.text = convert(post.views)
-            if (post.likedByMe) {
-                ibLikes.setImageResource(R.drawable.ic_baseline_favorite_24)
-            } else {
-                ibLikes.setImageResource(R.drawable.ic_outline_favorite_border_24)
-            }
+
+            ibLikes.text = convert(post.likes)
+            ibLikes.isChecked = post.likedByMe
+            ibShares.text = convert(post.shares)
+
+//            if (post.likedByMe) {
+//                ibLikes.setImageResource(R.drawable.ic_baseline_favorite_24)
+//            } else {
+//                ibLikes.setImageResource(R.drawable.ic_outline_favorite_border_24)
+//            }
             ibLikes.setOnClickListener {
                 onInteractionListener.onLike(post)
             }
             ibShares.setOnClickListener {
-                val animZoom = AnimationUtils.loadAnimation(it.context, R.anim.scale_animation)
-                binding.ibShares.startAnimation(animZoom)
                 onInteractionListener.onShare(post)
             }
 
