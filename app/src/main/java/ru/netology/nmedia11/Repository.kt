@@ -1,12 +1,18 @@
 package ru.netology.nmedia11
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 interface PostRepository {
     fun get(): LiveData<List<Post>>
     fun likeById(id: Long)
     fun share(id: Long)
+    fun save(post: Post)
+    fun remove(id: Long)
 }
 
 class PostRepo: PostRepository {
@@ -67,6 +73,7 @@ class PostRepo: PostRepository {
             views = 2898
         )
     )
+    private var nextId = posts.size.toLong()
 
     private val data = MutableLiveData(posts)
 
@@ -85,6 +92,32 @@ class PostRepo: PostRepository {
         posts = posts.map {
             if(it.id != id) it else it.copy(shares = it.shares + 1)
         }
+        data.value = posts
+    }
+
+    // сохранение поста
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun save(post: Post) {
+        if ((post.id == 0L) || (post.id == -1L)) {
+            posts = listOf(
+                post.copy(
+                    id = ++nextId,
+                    published = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy в hh:mm"))
+                )
+            ) + posts
+            data.value = posts
+            return
+        }
+
+        posts = posts.map {
+            if (it.id != post.id) it else it.copy(content = post.content)
+        }
+        data.value = posts
+    }
+
+    // удаление поста
+    override fun remove(id: Long) {
+        posts = posts.filter { it.id != id }
         data.value = posts
     }
 
