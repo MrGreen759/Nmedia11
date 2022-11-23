@@ -104,7 +104,6 @@
         android:id="@+id/ibShares"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:checkable="true"
         app:layout_constraintEnd_toStartOf="@+id/ivViews"
         app:layout_constraintHorizontal_bias="0.04"
         app:layout_constraintHorizontal_chainStyle="packed"
