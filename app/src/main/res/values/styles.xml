@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Widget.AppTheme.LikeButton" parent="Widget.MaterialComponents.Button.OutlinedButton.Icon">
+    <style name="Widget.AppTheme.LikeButton" parent="Widget.MaterialComponents.Button.TextButton.Icon">
         <item name="titleTextColor">@color/black</item>
         <item name="iconTint">@color/like_button_color</item>
         <item name="android:minWidth">@dimen/button_size</item>
         <item name="android:minHeight">@dimen/button_size</item>
     </style>
 
-    <style name="Widget.AppTheme.SimpleButton" parent="Widget.MaterialComponents.Button.OutlinedButton.Icon">
+    <style name="Widget.AppTheme.SimpleButton" parent="Widget.MaterialComponents.Button.TextButton.Icon">
         <item name="titleTextColor">@color/black</item>
         <item name="android:minWidth">@dimen/button_size</item>
         <item name="android:minHeight">@dimen/button_size</item>

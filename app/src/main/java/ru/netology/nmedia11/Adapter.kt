@@ -44,14 +44,10 @@ class PostViewHolder(
             tvViews.text = convert(post.views)
 
             ibLikes.text = convert(post.likes)
-            ibLikes.isChecked = post.likedByMe
             ibShares.text = convert(post.shares)
 
-//            if (post.likedByMe) {
-//                ibLikes.setImageResource(R.drawable.ic_baseline_favorite_24)
-//            } else {
-//                ibLikes.setImageResource(R.drawable.ic_outline_favorite_border_24)
-//            }
+            ibLikes.isChecked = post.likedByMe
+
             ibLikes.setOnClickListener {
                 onInteractionListener.onLike(post)
             }

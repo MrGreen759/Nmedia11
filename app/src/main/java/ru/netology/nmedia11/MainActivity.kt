@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.edirGroup.visibility = View.GONE
+        binding.editGroup.visibility = View.GONE
 
         val viewModel: PostViewModel by viewModels()
         val adapter = PostsAdapter (object : OnInteractionListener {
@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
                 return@observe
             }
             with(binding.content) {
-                binding.edirGroup.visibility = View.VISIBLE
+                binding.editGroup.visibility = View.VISIBLE
                 binding.content.requestFocus()
                 setText(post.content)
                 val imm = this.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -78,7 +78,7 @@ class MainActivity : AppCompatActivity() {
                 clearFocus()
                 val imm = this.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(this.windowToken, 0)
-                binding.edirGroup.visibility = View.GONE
+                binding.editGroup.visibility = View.GONE
             }
         }
 
@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity() {
             binding.content.clearFocus()
             val imm = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(binding.content.windowToken, 0)
-            binding.edirGroup.visibility = View.GONE
+            binding.editGroup.visibility = View.GONE
         }
 
     }

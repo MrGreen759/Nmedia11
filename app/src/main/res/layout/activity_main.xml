@@ -64,7 +64,7 @@
         app:srcCompat="@drawable/ic_outline_cancel_24" />
 
     <androidx.constraintlayout.widget.Group
-        android:id="@+id/edirGroup"
+        android:id="@+id/edit_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="visible"
