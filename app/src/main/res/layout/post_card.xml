@@ -40,19 +40,21 @@
         app:layout_constraintStart_toEndOf="@+id/icon"
         app:layout_constraintTop_toBottomOf="@+id/author" />
 
-    <ImageButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonMenu"
-        android:layout_width="@dimen/button_size"
-        android:layout_height="@dimen/button_size"
+        style="@style/Widget.AppTheme.SimpleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="5dp"
-        android:background="@android:color/transparent"
         android:contentDescription="@string/menu"
+        app:icon="@drawable/ic_baseline_more_vert_24"
         app:layout_constraintBottom_toBottomOf="@+id/icon"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.04"
         app:layout_constraintStart_toEndOf="@+id/author"
         app:layout_constraintTop_toTopOf="@+id/icon"
-        app:srcCompat="@drawable/ic_baseline_more_vert_24" />
+        app:layout_constraintVertical_bias="0.687"
+        />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier1"
@@ -83,93 +85,59 @@
         app:constraint_referenced_ids="content"
         tools:layout_editor_absoluteY="232dp" />
 
-    <ImageButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/ibLikes"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/likes"
-        app:layout_constraintEnd_toStartOf="@+id/tvLikes"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="4dp"
+        android:checkable="true"
+        app:layout_constraintEnd_toStartOf="@+id/ibShares"
         app:layout_constraintHorizontal_bias="0.04"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/barrier2"
-        app:srcCompat="@drawable/ic_outline_favorite_border_24" />
+        app:icon="@drawable/ic_like_24dp"
+        tools:text="likes"
+        style="@style/Widget.AppTheme.LikeButton" />
 
-    <TextView
-        android:id="@+id/tvLikes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:text="@string/likes"
-        app:layout_constraintBottom_toBottomOf="@+id/ibLikes"
-        app:layout_constraintEnd_toStartOf="@+id/ibShares"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/ibLikes"
-        app:layout_constraintTop_toTopOf="@+id/ibLikes" />
-
-    <ImageButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/ibShares"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/shares"
-        app:layout_constraintBottom_toBottomOf="@id/tvLikes"
-        app:layout_constraintEnd_toStartOf="@+id/tvShares"
-        app:layout_constraintStart_toEndOf="@+id/tvLikes"
-        app:layout_constraintTop_toTopOf="@+id/tvLikes"
-        app:srcCompat="@drawable/ic_baseline_share_24" />
-
-    <TextView
-        android:id="@+id/tvShares"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:text="@string/shares"
-        app:layout_constraintBottom_toBottomOf="@+id/ibShares"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/ibShares"
-        app:layout_constraintTop_toTopOf="@+id/ibShares" />
-
-    <TextView
-        android:id="@+id/tvId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:text="@string/Id"
-        app:layout_constraintBottom_toBottomOf="@+id/tvShares"
-        app:layout_constraintEnd_toStartOf="@id/tvPostId"
-        app:layout_constraintHorizontal_bias="0.5"
+        android:checkable="true"
+        app:layout_constraintEnd_toStartOf="@+id/ivViews"
+        app:layout_constraintHorizontal_bias="0.04"
         app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toEndOf="@+id/tvShares"
-        app:layout_constraintTop_toTopOf="@+id/tvShares" />
+        app:layout_constraintStart_toEndOf="@+id/ibLikes"
+        app:layout_constraintTop_toTopOf="@+id/ibLikes"
+        app:layout_constraintBottom_toBottomOf="@+id/ibLikes"
+        app:icon="@drawable/ic_baseline_share_24"
+        tools:text="shares"
+        style="@style/Widget.AppTheme.SimpleButton" />
 
-    <TextView
+     <com.google.android.material.button.MaterialButton
         android:id="@+id/tvPostId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
         android:text="@string/postId"
-        app:layout_constraintBottom_toBottomOf="@+id/tvId"
+        app:layout_constraintBottom_toBottomOf="@+id/ibShares"
         app:layout_constraintEnd_toStartOf="@id/ivViews"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/tvId"
-        app:layout_constraintTop_toTopOf="@+id/tvId" />
+        app:layout_constraintHorizontal_bias="0.04"
+        app:layout_constraintStart_toEndOf="@+id/ibShares"
+        app:layout_constraintTop_toTopOf="@+id/ibShares"
+        style="@style/Widget.AppTheme.SimpleButton" />
 
     <ImageView
         android:id="@+id/ivViews"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:contentDescription="@string/views"
         app:layout_constraintEnd_toStartOf="@+id/tvViews"
         app:layout_constraintHorizontal_bias="0.96"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/barrier2"
+        app:layout_constraintTop_toTopOf="@id/ibShares"
+        app:layout_constraintBottom_toBottomOf="@id/ibShares"
         app:srcCompat="@drawable/ic_baseline_remove_red_eye_24" />
 
     <TextView
@@ -180,7 +148,7 @@
         android:text="@string/views"
         app:layout_constraintBottom_toBottomOf="@+id/ivViews"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.04"
         app:layout_constraintStart_toEndOf="@+id/ivViews"
         app:layout_constraintTop_toTopOf="@+id/ivViews" />
 
