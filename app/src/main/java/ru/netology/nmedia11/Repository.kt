@@ -72,7 +72,8 @@ class PostRepo: PostRepository {
             shares = 514,
             views = 2898
         )
-    )
+    ).reversed()
+    
     private var nextId = posts.size.toLong()
 
     private val data = MutableLiveData(posts)

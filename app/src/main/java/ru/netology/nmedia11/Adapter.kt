@@ -90,7 +90,7 @@ class PostViewHolder(
         }
     }
 
-    // на входе - число, на выходе строка типа "999" или "1К" или "2,2М"
+    // конвертер: на входе - число, на выходе строка типа "999" или "1К" или "2,2М"
     private fun convert(num: Int): String {
         val form: String
         val n: Int
