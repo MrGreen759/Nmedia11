@@ -24,7 +24,8 @@ class PostRepo: PostRepository {
             published = "21 Мая в 18:36",
             likes = 799,
             shares = 184,
-            views = 2898
+            views = 2898,
+            video = ""
         ),
         Post(
             id = 2,
@@ -34,7 +35,8 @@ class PostRepo: PostRepository {
             likedByMe = false,
             likes = 999,
             shares = 384,
-            views = 1898
+            views = 1898,
+            video = ""
         ),
         Post(
             id = 3,
@@ -43,7 +45,8 @@ class PostRepo: PostRepository {
             published = "22 Мая в 19:36",
             likes = 2999,
             shares = 484,
-            views = 898
+            views = 898,
+            video = "https://www.youtube.com/watch?v=cH_4oIxPBnQ"
         ),
         Post(
             id = 4,
@@ -52,7 +55,8 @@ class PostRepo: PostRepository {
             published = "24 Мая в 18:36",
             likes = 99,
             shares = 385,
-            views = 3498
+            views = 3498,
+            video = ""
         ),
         Post(
             id = 5,
@@ -61,7 +65,8 @@ class PostRepo: PostRepository {
             published = "27 Мая в 17:36",
             likes = 1101,
             shares = 214,
-            views = 4898
+            views = 4898,
+            video = ""
         ),
         Post(
             id = 6,
@@ -70,9 +75,11 @@ class PostRepo: PostRepository {
             published = "28 Мая в 20:36",
             likes = 1401,
             shares = 514,
-            views = 2898
+            views = 2898,
+            video = "https://www.youtube.com/watch?v=Rjcvfv8bqFo"
         )
-    )
+    ).reversed()
+    
     private var nextId = posts.size.toLong()
 
     private val data = MutableLiveData(posts)

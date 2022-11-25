@@ -13,7 +13,8 @@ data class Post(
     var likedByMe: Boolean = false,
     var likes: Int,
     var shares: Int,
-    val views: Int
+    val views: Int,
+    val video: String
 )
 
 private val emptyPost = Post (
@@ -23,7 +24,8 @@ private val emptyPost = Post (
     published = "",
     likes = 0,
     shares = 0,
-    views = 0
+    views = 0,
+    video = ""
     )
 
 class PostViewModel: ViewModel() {

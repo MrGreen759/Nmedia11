@@ -19,4 +19,6 @@
     <string name="error_empty_content">Content cannot be empty</string>
     <string name="Id" translatable="false">ID:</string>
     <string name="postId" translatable="false">postId</string>
+
+    <string name="play_video">PLAY</string>
 </resources>
