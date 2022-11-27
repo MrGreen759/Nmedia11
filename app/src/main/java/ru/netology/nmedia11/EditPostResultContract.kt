@@ -1,7 +1,6 @@
 package ru.netology.nmedia11
 
 import android.app.Activity
-import android.app.LauncherActivity
 import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract

@@ -120,16 +120,31 @@
         tools:text="shares"
         style="@style/Widget.AppTheme.SimpleButton" />
 
-     <com.google.android.material.button.MaterialButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/tvPostId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/postId"
         app:layout_constraintBottom_toBottomOf="@+id/ibShares"
-        app:layout_constraintEnd_toStartOf="@id/ivViews"
+        app:layout_constraintEnd_toStartOf="@id/ibVideo"
         app:layout_constraintHorizontal_bias="0.04"
         app:layout_constraintStart_toEndOf="@+id/ibShares"
         app:layout_constraintTop_toTopOf="@+id/ibShares"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        style="@style/Widget.AppTheme.SimpleButton" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/ibVideo"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:layout_constraintEnd_toStartOf="@+id/ivViews"
+        app:layout_constraintHorizontal_bias="0.04"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/tvPostId"
+        app:layout_constraintTop_toTopOf="@+id/ibLikes"
+        app:layout_constraintBottom_toBottomOf="@+id/ibLikes"
+        app:icon="@drawable/ic_video_24"
+        android:text="@string/play_video"
         style="@style/Widget.AppTheme.SimpleButton" />
 
     <ImageView
