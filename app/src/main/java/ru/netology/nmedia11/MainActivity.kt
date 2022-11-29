@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
 
         val viewModel: PostViewModel by viewModels()
         val adapter = PostsAdapter (object : OnInteractionListener {
+
             override fun onEdit(post: Post) {
                 viewModel.addAndEdit(post)
             }
