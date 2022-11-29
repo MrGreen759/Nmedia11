@@ -1,5 +1,6 @@
 package ru.netology.nmedia11
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -26,11 +27,26 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onShare(post: Post) {
+                val intent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_TEXT, post.content)
+                    type = "text/plain"
+                }
+                startActivity(intent)
                 viewModel.share(post.id)
             }
 
             override fun onRemove(post: Post) {
                 viewModel.remove(post.id)
+            }
+
+            override fun onPlay(post: Post) {
+                super.onPlay(post)
+                val toVideoIntent = Intent(this@MainActivity, PlayVideoActivity::class.java)
+                val mBundle = Bundle()
+                mBundle.putString("refToVideo", post.video)
+                toVideoIntent.putExtras(mBundle)
+                startActivity(toVideoIntent, mBundle)
             }
         })
 

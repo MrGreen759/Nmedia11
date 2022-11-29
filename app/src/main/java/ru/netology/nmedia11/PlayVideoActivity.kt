@@ -20,6 +20,8 @@ class PlayVideoActivity : AppCompatActivity() {
         val ref = intent.getStringExtra("refToVideo")
 
         // получаем миниатюру
+        // TODO обернуть в try-catch ?
+        // TODO проверка наличия интернет-соединения ?
         val videoId = Uri.parse(ref).getQueryParameter("v")
         val thumbnailUri = Uri.parse("https://img.youtube.com/vi/${videoId}/0.jpg")
         Glide.with(this).load(thumbnailUri).into(binding.ivThumbnail)
