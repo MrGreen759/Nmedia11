@@ -39,6 +39,15 @@ class MainActivity : AppCompatActivity() {
             override fun onRemove(post: Post) {
                 viewModel.remove(post.id)
             }
+
+            override fun onPlay(post: Post) {
+                super.onPlay(post)
+                val toVideoIntent = Intent(this@MainActivity, PlayVideoActivity::class.java)
+                val mBundle = Bundle()
+                mBundle.putString("refToVideo", post.video)
+                toVideoIntent.putExtras(mBundle)
+                startActivity(toVideoIntent, mBundle)
+            }
         })
 
         binding.list.adapter = adapter

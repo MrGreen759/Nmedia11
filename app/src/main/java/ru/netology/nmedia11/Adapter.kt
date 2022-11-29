@@ -1,12 +1,9 @@
 package ru.netology.nmedia11
 
-import android.content.Intent
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nmedia11.databinding.PostCardBinding
@@ -16,6 +13,7 @@ interface OnInteractionListener {
     fun onEdit(post: Post) {}
     fun onShare(post: Post) {}
     fun onRemove(post: Post) {}
+    fun onPlay(post: Post) {}
 }
 
 class PostsAdapter(
@@ -95,11 +93,7 @@ class PostViewHolder(
                 }.show()
             }
             ibVideo.setOnClickListener {
-                val toVideoIntent = Intent(it.context, PlayVideoActivity::class.java)
-                val mBundle = Bundle()
-                mBundle.putString("refToVideo", post.video)
-                toVideoIntent.putExtras(mBundle)
-                startActivity(it.context, toVideoIntent, mBundle)
+                onInteractionListener.onPlay(post)
             }
         }
     }
