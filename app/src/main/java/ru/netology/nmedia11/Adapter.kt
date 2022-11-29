@@ -1,9 +1,12 @@
 package ru.netology.nmedia11
 
+import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import android.widget.PopupMenu
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nmedia11.databinding.PostCardBinding
@@ -55,6 +58,9 @@ class PostViewHolder(
                 onInteractionListener.onShare(post)
             }
 
+            if(post.video == "") ibVideo.visibility = View.GONE
+            else ibVideo.visibility = View.VISIBLE
+
             // слушатель на кнопку "три точки"
             buttonMenu.setOnClickListener {
                 PopupMenu(it.context, it).apply {
@@ -73,7 +79,8 @@ class PostViewHolder(
                                     published = "",
                                     likes = 0,
                                     shares = 0,
-                                    views = 0
+                                    views = 0,
+                                    video = ""
                                         )
                                 onInteractionListener.onEdit(epost)
                                 true
@@ -87,10 +94,18 @@ class PostViewHolder(
                     }
                 }.show()
             }
+            ibVideo.setOnClickListener {
+                val toVideoIntent = Intent(it.context, PlayVideoActivity::class.java)
+                val mBundle = Bundle()
+                mBundle.putString("refToVideo", post.video)
+                toVideoIntent.putExtras(mBundle)
+                startActivity(it.context, toVideoIntent, mBundle)
+            }
         }
     }
 
-    // на входе - число, на выходе строка типа "999" или "1К" или "2,2М"
+
+    // конвертер: на входе - число, на выходе строка типа "999" или "1К" или "2,2М"
     private fun convert(num: Int): String {
         val form: String
         val n: Int

@@ -12,4 +12,6 @@
     <string name="post_text">Текст поста</string>
     <string name="description_save">Сохранить</string>
     <string name="description_cancel">Отмена</string>
+    <string name="play_video">ВИДЕО</string>
+    <string name="chooser_share_post">Поделиться</string>
 </resources>
