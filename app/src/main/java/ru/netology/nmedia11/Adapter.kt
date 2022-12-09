@@ -1,11 +1,17 @@
 package ru.netology.nmedia11
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import ru.netology.nmedia11.EditPostFragment.Companion.textArg
+import ru.netology.nmedia11.OnePostFragment.Companion.idArg
 import ru.netology.nmedia11.databinding.PostCardBinding
 
 interface OnInteractionListener {
@@ -14,6 +20,7 @@ interface OnInteractionListener {
     fun onShare(post: Post) {}
     fun onRemove(post: Post) {}
     fun onPlay(post: Post) {}
+    fun onPost(id: Long) {}
 }
 
 class PostsAdapter(
@@ -42,10 +49,10 @@ class PostViewHolder(
             published.text = post.published
             content.text = post.content
             tvPostId.text = "ID: " + post.id.toString()
-            tvViews.text = convert(post.views)
+            tvViews.text = Utils.convert(post.views)
 
-            ibLikes.text = convert(post.likes)
-            ibShares.text = convert(post.shares)
+            ibLikes.text = Utils.convert(post.likes)
+            ibShares.text = Utils.convert(post.shares)
 
             ibLikes.isChecked = post.likedByMe
 
@@ -95,29 +102,40 @@ class PostViewHolder(
             ibVideo.setOnClickListener {
                 onInteractionListener.onPlay(post)
             }
+            author.setOnClickListener {
+                onInteractionListener.onPost(post.id)
+            }
+            published.setOnClickListener {
+                onInteractionListener.onPost(post.id)
+            }
+            content.setOnClickListener {
+                onInteractionListener.onPost(post.id)
+            }
+            ivViews.setOnClickListener {
+                onInteractionListener.onPost(post.id)
+            }
         }
     }
-
 
     // конвертер: на входе - число, на выходе строка типа "999" или "1К" или "2,2М"
-    private fun convert(num: Int): String {
-        val form: String
-        val n: Int
-        when(num) {
-            in 0 .. 999 -> return num.toString()
-            in 1000 .. 9999 -> {
-                n = num%1000
-                form = (if((n < 100)||(n>900)) "%.0f" else "%.1f")
-                return String.format(form, num.toDouble()/1000) + "K"
-            }
-            in 10000 .. 999999 -> return String.format("%.0f", num.toDouble()/1000) + "K"
-            else -> {
-                n = num%1000000
-                form = (if((n < 100000)||(n>900000)) "%.0f" else "%.1f")
-                return String.format(form, num.toDouble()/1000000) + "M"
-            }
-        }
-    }
+//     fun convert(num: Int): String {
+//        val form: String
+//        val n: Int
+//        when(num) {
+//            in 0 .. 999 -> return num.toString()
+//            in 1000 .. 9999 -> {
+//                n = num%1000
+//                form = (if((n < 100)||(n>900)) "%.0f" else "%.1f")
+//                return String.format(form, num.toDouble()/1000) + "K"
+//            }
+//            in 10000 .. 999999 -> return String.format("%.0f", num.toDouble()/1000) + "K"
+//            else -> {
+//                n = num%1000000
+//                form = (if((n < 100000)||(n>900000)) "%.0f" else "%.1f")
+//                return String.format(form, num.toDouble()/1000000) + "M"
+//            }
+//        }
+//    }
 
 }
 

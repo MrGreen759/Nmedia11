@@ -2,7 +2,7 @@
     <string name="app_name">NMedia</string>
     <string name="nmedia">NMedia!</string>
     <string name="title">Netology. University of internet-professions of the future</string>
-    <string name="hellotext">Hello, this is the new Netology! → http://netolo.gy/fyb</string>
+    <string name="hellotext">Hello, this is the new Netology! \n\n\nWelcome! → http://netolo.gy/fyb</string>
     <string name="icon" translatable="false">icon</string>
     <string name="published">date and time</string>
     <string name="menu" translatable="false">menu</string>

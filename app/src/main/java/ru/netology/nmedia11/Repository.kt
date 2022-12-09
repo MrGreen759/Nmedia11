@@ -25,7 +25,7 @@ class PostRepo: PostRepository {
             likes = 799,
             shares = 184,
             views = 2898,
-            video = ""
+            video = "https://www.youtube.com/watch?v=KYByIYwhFn4"
         ),
         Post(
             id = 2,
