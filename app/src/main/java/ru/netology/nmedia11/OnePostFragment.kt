@@ -7,14 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnClickListener
 import android.view.ViewGroup
-import android.widget.Adapter
 import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import ru.netology.nmedia11.EditPostFragment.Companion.textArg
 import ru.netology.nmedia11.databinding.FragmentOnePostBinding
+
+// Фрагмент просмотра карточки одного поста во весь экран
 
 class OnePostFragment: Fragment() {
 
@@ -30,16 +30,17 @@ class OnePostFragment: Fragment() {
         viewModel.data.observe(viewLifecycleOwner) { posts ->
             val post = posts.find { it.id == postId } ?: return@observe
 
+            // слушатель для запуска просмотра видео
             val playVideoListener = OnClickListener{
-                val playVideoIntent = Intent(Intent.ACTION_VIEW, Uri.parse(post.video))
-                startActivity(playVideoIntent)
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(post.video)))
             }
+            //
 
             with(binding) {
                 author.text = post.author
                 published.text = post.published
                 content.text = post.content
-                tvPostId.text = "ID: " + post.id.toString()
+                tvPostId.setText("ID: " + post.id.toString())
                 ibLikes.text = Utils.convert(post.likes)
                 ibShares.text = Utils.convert(post.shares)
                 ibLikes.isChecked = post.likedByMe

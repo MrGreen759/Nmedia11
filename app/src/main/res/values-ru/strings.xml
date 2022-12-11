@@ -14,4 +14,5 @@
     <string name="description_cancel">Отмена</string>
     <string name="play_video">ВИДЕО</string>
     <string name="chooser_share_post">Поделиться</string>
+    <string name="type_here">Введите текст</string>
 </resources>
