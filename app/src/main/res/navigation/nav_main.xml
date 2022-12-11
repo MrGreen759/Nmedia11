@@ -25,5 +25,9 @@
     <fragment
         android:id="@+id/onePostFragment"
         android:name="ru.netology.nmedia11.OnePostFragment"
-        android:label="OnePostFragment" />
+        android:label="OnePostFragment" >
+        <action
+            android:id="@+id/action_onePostFragment_to_editPostFragment"
+            app:destination="@id/editPostFragment" />
+    </fragment>
 </navigation>
