@@ -11,6 +11,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import ru.netology.nmedia11.databinding.FragmentEditPostBinding
 
+// Редактирование текущего поста / создание нового поста
+
 class EditPostFragment : Fragment() {
 
     companion object {

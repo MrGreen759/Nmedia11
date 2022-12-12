@@ -14,6 +14,8 @@ import ru.netology.nmedia11.EditPostFragment.Companion.textArg
 import ru.netology.nmedia11.OnePostFragment.Companion.idArg
 import ru.netology.nmedia11.databinding.FragmentFeedBinding
 
+// Отображение списка постов
+
 class FeedFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -53,6 +55,7 @@ class FeedFragment : Fragment() {
             }
 
             override fun onPost(id: Long) {
+                // переход во фрагмент с одним постом
                 findNavController().navigate(R.id.action_feedFragment_to_onePostFragment,
                     Bundle().apply { idArg = id })
             }
@@ -69,6 +72,7 @@ class FeedFragment : Fragment() {
             if (post.id == 0L) {
                 return@observe
             }
+            // переход во фрагмент редактирования текущего поста / создания нового поста
             findNavController().navigate(R.id.action_feedFragment_to_editPostFragment,
                 Bundle().apply { textArg = post.content })
         }

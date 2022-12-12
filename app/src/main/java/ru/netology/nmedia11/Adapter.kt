@@ -13,7 +13,6 @@ interface OnInteractionListener {
     fun onEdit(post: Post) {}
     fun onShare(post: Post) {}
     fun onRemove(post: Post) {}
-    fun onPlay(post: Post) {}
     fun onPost(id: Long) {}
 }
 
@@ -38,7 +37,9 @@ class PostViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(post: Post) {
+        // слушатель для перехода во фрагмент просмотра одного поста
         val bigClick = View.OnClickListener { onInteractionListener.onPost(post.id) }
+
         binding.apply {
             author.text = post.author
             published.text = post.published
@@ -94,16 +95,10 @@ class PostViewHolder(
                     }
                 }.show()
             }
-            ibVideo.setOnClickListener {
-                onInteractionListener.onPlay(post)
-            }
-//            group1.setOnClickListener(bigClick)
-            icon.setOnClickListener(bigClick)
-            author.setOnClickListener(bigClick)
-            published.setOnClickListener (bigClick)
+
+            // переход во фрагмент просмотра одного поста
             content.setOnClickListener(bigClick)
-            ibVideo.setOnClickListener(bigClick)
-            ivViews.setOnClickListener(bigClick)
+            cardlayout.setOnClickListener(bigClick)
         }
     }
 }

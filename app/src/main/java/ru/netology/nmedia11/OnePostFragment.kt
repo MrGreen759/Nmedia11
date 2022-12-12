@@ -34,7 +34,6 @@ class OnePostFragment: Fragment() {
             val playVideoListener = OnClickListener{
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(post.video)))
             }
-            //
 
             with(binding) {
                 author.text = post.author
