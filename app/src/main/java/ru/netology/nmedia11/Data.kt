@@ -1,7 +1,10 @@
 package ru.netology.nmedia11
 
+import android.app.Application
+import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
@@ -28,8 +31,8 @@ private val emptyPost = Post (
     video = ""
     )
 
-class PostViewModel: ViewModel() {
-    private val repository: PostRepo = PostRepo()
+class PostViewModel(application: Application): AndroidViewModel(application) {
+    private val repository: PostRepoSQLite = PostRepoSQLite(AppDb.getInstance(application).postDao)
     val data = repository.get()
     val edited = MutableLiveData(emptyPost)
 
