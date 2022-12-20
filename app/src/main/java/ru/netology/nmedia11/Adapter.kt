@@ -74,7 +74,7 @@ class PostViewHolder(
                             }
                             R.id.add -> {
                                 val epost = Post (
-                                    id = -1L,
+                                    id = 0L,
                                     author = it.context.getString(R.string.title),
                                     content = "",
                                     published = "",

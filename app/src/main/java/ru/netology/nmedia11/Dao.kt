@@ -3,6 +3,8 @@ package ru.netology.nmedia11
 import android.content.ContentValues
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import android.os.Build
+import androidx.annotation.RequiresApi
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -73,11 +75,16 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
         return posts
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun save(post: Post): Post {
         val values = ContentValues().apply {
-            put(PostColumns.COLUMN_AUTHOR, R.string.title)
+            put(PostColumns.COLUMN_AUTHOR, post.author)
             put(PostColumns.COLUMN_CONTENT, post.content)
             put(PostColumns.COLUMN_PUBLISHED, LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy в hh:mm")))
+            put(PostColumns.COLUMN_LIKES, post.likes)
+            put(PostColumns.COLUMN_SHARES, post.shares)
+            put(PostColumns.COLUMN_VIEWS, post.views)
+            put(PostColumns.COLUMN_VIDEO, post.video)
         }
         val id = if (post.id != 0L) {
             db.update(
@@ -116,7 +123,12 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
     }
 
     override fun share(id: Long) {
-        TODO("Not yet implemented")
+        db.execSQL(
+            """
+           UPDATE posts SET
+               shares = shares + 1 WHERE id = ?;
+        """.trimIndent(), arrayOf(id)
+        )
     }
 
     override fun remove(id: Long) {
