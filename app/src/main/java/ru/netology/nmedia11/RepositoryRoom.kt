@@ -1,7 +1,7 @@
 package ru.netology.nmedia11
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.Transformations
 
 class PostRepoRoom(
@@ -76,13 +76,12 @@ class PostRepoRoom(
 //    private val data = MutableLiveData(posts)
 
 //    init {
-//          всё, что закомментировано ниже - только для создания БД при первом запуске
-//        dao.save(posts[0])
-//        dao.save(posts[1])
-//        dao.save(posts[2])
-//        dao.save(posts[3])
-//        dao.save(posts[4])
-//        dao.save(posts[5])
+//        save(posts[0])
+//        save(posts[1])
+//        save(posts[2])
+//        save(posts[3])
+//        save(posts[4])
+//        save(posts[5])
 //    }
 
     override fun get() = Transformations.map(dao.getAll()) { list ->
@@ -91,22 +90,10 @@ class PostRepoRoom(
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun save(post: Post) {
         dao.save(PostEntity.fromDto(post))
     }
-
-//    override fun save(post: Post) {
-//        val id = post.id
-//        val saved = dao.save(post)
-//        posts = if (id == 0L) {
-//            listOf(saved) + posts
-//        } else {
-//            posts.map {
-//                if (it.id != id) it else saved
-//            }
-//        }
-//        data.value = posts
-//    }
 
     override fun likeById(id: Long) {
         dao.likeById(id)

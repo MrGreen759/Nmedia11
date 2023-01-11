@@ -30,7 +30,7 @@ private val emptyPost = Post (
     )
 
 class PostViewModel(application: Application): AndroidViewModel(application) {
-    private val repository: PostRepoSQLite = PostRepoSQLite(AppDb.getInstance(application).postDao)
+    private val repository: PostRepoRoom = PostRepoRoom(AppDb.getInstance(application).postDao())
     val data = repository.get()
     val edited = MutableLiveData(emptyPost)
 

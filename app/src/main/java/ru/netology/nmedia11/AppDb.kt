@@ -1,13 +1,10 @@
 package ru.netology.nmedia11
 
 import android.content.Context
-import android.database.sqlite.SQLiteDatabase
-import android.database.sqlite.SQLiteOpenHelper
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import ru.netology.nmedia11.PostDao
-import ru.netology.nmedia11.PostDaoImpl
+//import ru.netology.nmedia11.PostEntity
 
 @Database(entities = [PostEntity::class], version = 1)
 abstract class AppDb: RoomDatabase() {
