@@ -69,7 +69,7 @@ class FeedFragment : Fragment() {
         }
 
         viewModel.edited.observe(viewLifecycleOwner) { post ->
-            if (post.id == 0L) {
+            if (post.id == -1L) {
                 return@observe
             }
             // переход во фрагмент редактирования текущего поста / создания нового поста
