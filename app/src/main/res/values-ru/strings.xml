@@ -15,4 +15,11 @@
     <string name="play_video">ВИДЕО</string>
     <string name="chooser_share_post">Поделиться</string>
     <string name="type_here">Введите текст</string>
+    <string name="notification_liked">Пользователь %1$s поставил лайк посту %2$s</string>
+    <string name="remote_channel_name">Уведомления сервера</string>
+    <string name="remote_channel_description">Уведомления удаленного сервера</string>
+    <string name="google_play_unavailable">Google Api недоступен</string>
+    <string name="notification_newpost">Пользователь %1$s опубликовал новый пост</string>
+    <string name="mark_as_read">Прочитано</string>
+    <string name="open_messager">Открыть в месседжере</string>
 </resources>

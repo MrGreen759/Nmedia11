@@ -23,4 +23,12 @@
     <string name="play_video">PLAY</string>
     <string name="chooser_share_post">Share post</string>
     <string name="type_here">Type text here</string>
+
+    <string name="google_play_unavailable">Google Api unavailable</string>
+    <string name="notification_liked">User %1$s liked %2$s\'s post</string>
+    <string name="notification_newpost">User %1$s wrote new post</string>
+    <string name="remote_channel_name">Server notifications</string>
+    <string name="remote_channel_description">Notifications from remote server</string>
+    <string name="mark_as_read">"Mark as read</string>
+    <string name="open_messager">Open in messager</string>
 </resources>
