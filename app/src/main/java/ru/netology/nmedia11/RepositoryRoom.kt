@@ -4,6 +4,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.Transformations
 
+@RequiresApi(Build.VERSION_CODES.O)
 class PostRepoRoom(
     private val dao: PostDao
 ) : PostRepository {
@@ -74,7 +75,7 @@ class PostRepoRoom(
 //        )
 //    )
 //    private val data = MutableLiveData(posts)
-
+//
 //    init {
 //        save(posts[0])
 //        save(posts[1])

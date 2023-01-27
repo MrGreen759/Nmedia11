@@ -30,12 +30,17 @@ private val emptyPost = Post (
     )
 
 class PostViewModel(application: Application): AndroidViewModel(application) {
+    @RequiresApi(Build.VERSION_CODES.O)
     private val repository: PostRepoRoom = PostRepoRoom(AppDb.getInstance(application).postDao())
+    @RequiresApi(Build.VERSION_CODES.O)
     val data = repository.get()
     val edited = MutableLiveData(emptyPost)
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun likeById(id: Long) = repository.likeById(id)
+    @RequiresApi(Build.VERSION_CODES.O)
     fun share(id: Long) = repository.share(id)
+    @RequiresApi(Build.VERSION_CODES.O)
     fun remove(id: Long) = repository.remove(id)
 
     @RequiresApi(Build.VERSION_CODES.O)
