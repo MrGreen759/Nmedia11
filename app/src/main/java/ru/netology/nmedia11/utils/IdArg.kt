@@ -1,6 +1,7 @@
-package ru.netology.nmedia11
+package ru.netology.nmedia11.utils
 
 import android.os.Bundle
+import ru.netology.nmedia11.Post
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -14,6 +15,7 @@ object IdArg: ReadWriteProperty<Bundle, Long?> {
 
         override fun getValue(thisRef: Bundle, property: KProperty<*>): Long? =
             thisRef.getLong(property.name)
+
     }
 
 

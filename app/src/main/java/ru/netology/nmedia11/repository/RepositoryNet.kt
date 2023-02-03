@@ -1,0 +1,91 @@
+package ru.netology.nmedia11.repository
+
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.internal.EMPTY_REQUEST
+import ru.netology.nmedia11.Post
+import ru.netology.nmedia11.PostRepository
+import java.util.concurrent.TimeUnit
+
+
+class PostRepoNet: PostRepository {
+    private val client = OkHttpClient.Builder()
+        .connectTimeout(30, TimeUnit.SECONDS)
+        .build()
+    private val gson = Gson()
+    private val typeToken = object : TypeToken<List<Post>>() {}
+
+    companion object {
+        private const val BASE_URL = "http://10.0.2.2:10999"
+        private val jsonType = "application/json".toMediaType()
+    }
+
+    // получение список постов
+    override fun get(): List<Post> {
+        val request: Request = Request.Builder()
+            .url("${BASE_URL}/api/slow/posts")
+            .build()
+
+        return client.newCall(request)
+            .execute()
+            .let { it.body?.string() ?: throw RuntimeException("body is null") }
+            .let {
+                gson.fromJson(it, typeToken.type)
+            }
+    }
+
+    // лайк
+    override fun likeById(id: Long) {
+        val request: Request = Request.Builder()
+            .post(EMPTY_REQUEST)
+            .url("${BASE_URL}/api/slow/posts/$id/likes")
+            .build()
+        client.newCall(request).execute().close()
+    }
+
+    // дизлайк
+    override fun unLikeById(id: Long) {
+        val request: Request = Request.Builder()
+            .delete()
+            .url("${BASE_URL}/api/slow/posts/$id/likes")
+            .build()
+        client.newCall(request).execute().close()
+    }
+
+    // поделиться
+    override fun share(id: Long) {
+        val request: Request = Request.Builder()
+            .post(EMPTY_REQUEST)
+            .url("${BASE_URL}/api/slow/posts/$id/shares")
+            .build()
+        client.newCall(request).execute().close()
+    }
+
+    // сохранить
+    override fun save(post: Post) {
+        val request: Request = Request.Builder()
+            .post(gson.toJson(post).toRequestBody(jsonType))
+            .url("${BASE_URL}/api/slow/posts")
+            .build()
+
+        client.newCall(request)
+            .execute()
+            .close()
+    }
+
+    // удаление поста
+    override fun remove(id: Long) {
+        val request: Request = Request.Builder()
+            .delete()
+            .url("${BASE_URL}/api/slow/posts/$id")
+            .build()
+
+        client.newCall(request)
+            .execute()
+            .close()
+    }
+}

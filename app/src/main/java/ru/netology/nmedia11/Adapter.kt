@@ -7,6 +7,7 @@ import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nmedia11.databinding.PostCardBinding
+import ru.netology.nmedia11.utils.Utils
 
 interface OnInteractionListener {
     fun onLike(post: Post) {}
@@ -42,7 +43,7 @@ class PostViewHolder(
 
         binding.apply {
             author.text = post.author
-            published.text = post.published
+            published.text = post.published.toString()
             content.text = post.content
             tvPostId.text = "ID: " + post.id.toString()
             tvViews.text = Utils.convert(post.views)
@@ -77,7 +78,8 @@ class PostViewHolder(
                                     id = 0L,
                                     author = it.context.getString(R.string.title),
                                     content = "",
-                                    published = "",
+                                    published = 0L,
+                                    likedByMe = false,
                                     likes = 0,
                                     shares = 0,
                                     views = 0,

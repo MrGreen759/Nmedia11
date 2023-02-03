@@ -1,4 +1,4 @@
-package ru.netology.nmedia11
+package ru.netology.nmedia11.utils
 
 object Utils {
     fun convert(num: Int): String {

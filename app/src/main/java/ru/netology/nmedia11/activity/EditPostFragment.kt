@@ -1,4 +1,4 @@
-package ru.netology.nmedia11
+package ru.netology.nmedia11.activity
 
 import android.os.Build
 import android.os.Bundle
@@ -9,7 +9,9 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import ru.netology.nmedia11.PostViewModel
 import ru.netology.nmedia11.databinding.FragmentEditPostBinding
+import ru.netology.nmedia11.utils.StringArg
 
 // Редактирование текущего поста / создание нового поста
 
@@ -40,8 +42,12 @@ class EditPostFragment : Fragment() {
         binding.ok.setOnClickListener {
             viewModel.changeContent(binding.edit.text.toString())
             viewModel.save()
+        }
+        viewModel.postCreated.observe(viewLifecycleOwner) {
+            viewModel.loadPosts()
             findNavController().navigateUp()
         }
+
         return binding.root
     }
 
