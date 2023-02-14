@@ -22,4 +22,7 @@
     <string name="notification_newpost">Пользователь %1$s опубликовал новый пост</string>
     <string name="mark_as_read">Прочитано</string>
     <string name="open_messager">Открыть в месседжере</string>
+    <string name="error_loading">Что-то пошло не так. Попробуйте позже.</string>
+    <string name="retry_loading">Повторить</string>
+    <string name="empty_posts">Постов нет. Создайте новый пост, он появится здесь.</string>
 </resources>

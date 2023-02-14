@@ -1,13 +1,13 @@
-package ru.netology.nmedia11
-
-import android.os.Build
-import androidx.annotation.RequiresApi
-import androidx.lifecycle.Transformations
-
-@RequiresApi(Build.VERSION_CODES.O)
-class PostRepoRoom(
-    private val dao: PostDao
-) : PostRepository {
+//package ru.netology.nmedia11
+//
+//import android.os.Build
+//import androidx.annotation.RequiresApi
+//import androidx.lifecycle.Transformations
+//
+//@RequiresApi(Build.VERSION_CODES.O)
+//class PostRepoRoom(
+//    private val dao: PostDao
+//) : PostRepository {
 //    private var posts = emptyList<Post>()
 
     //      всё, что закомментировано ниже - только для создания БД при первом запуске
@@ -84,28 +84,28 @@ class PostRepoRoom(
 //        save(posts[4])
 //        save(posts[5])
 //    }
-
-    override fun get() = Transformations.map(dao.getAll()) { list ->
-        list.map {
-            it.toDto()
-        }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    override fun save(post: Post) {
-        dao.save(PostEntity.fromDto(post))
-    }
-
-    override fun likeById(id: Long) {
-        dao.likeById(id)
-    }
-
-    override fun share(id: Long) {
-        dao.share(id)
-    }
-
-    override fun remove(id: Long) {
-        dao.remove(id)
-     }
-
-}
+//
+//    override fun get() = Transformations.map(dao.getAll()) { list ->
+//        list.map {
+//            it.toDto()
+//        }
+//    }
+//
+//    @RequiresApi(Build.VERSION_CODES.O)
+//    override fun save(post: Post) {
+//        dao.save(PostEntity.fromDto(post))
+//    }
+//
+//    override fun likeById(id: Long) {
+//        dao.likeById(id)
+//    }
+//
+//    override fun share(id: Long) {
+//        dao.share(id)
+//    }
+//
+//    override fun remove(id: Long) {
+//        dao.remove(id)
+//     }
+//
+//}

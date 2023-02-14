@@ -1,4 +1,4 @@
-package ru.netology.nmedia11
+package ru.netology.nmedia11.activity
 
 import android.content.Intent
 import android.net.Uri
@@ -14,7 +14,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import ru.netology.nmedia11.*
 import ru.netology.nmedia11.databinding.FragmentOnePostBinding
+import ru.netology.nmedia11.utils.IdArg
+import ru.netology.nmedia11.utils.Utils
 
 // Фрагмент просмотра карточки одного поста во весь экран
 
@@ -30,8 +33,8 @@ class OnePostFragment: Fragment() {
         val viewModel: PostViewModel by viewModels(ownerProducer = ::requireParentFragment)
         val postId = arguments?.idArg
 
-        viewModel.data.observe(viewLifecycleOwner) { posts ->
-            val post = posts.find { it.id == postId } ?: return@observe
+        viewModel.data.observe(viewLifecycleOwner) { state ->
+            val post = state.posts.find { it.id == postId } ?: return@observe
 
             // слушатель для запуска просмотра видео
             val playVideoListener = OnClickListener{
@@ -40,7 +43,7 @@ class OnePostFragment: Fragment() {
 
             with(binding) {
                 author.text = post.author
-                published.text = post.published
+                published.text = post.published.toString();
                 content.text = post.content
                 tvPostId.setText("ID: " + post.id.toString())
                 ibLikes.text = Utils.convert(post.likes)
@@ -94,7 +97,8 @@ class OnePostFragment: Fragment() {
                                         id = -1L,
                                         author = it.context.getString(R.string.title),
                                         content = "",
-                                        published = "",
+                                        published = 0L,
+                                        likedByMe = false,
                                         likes = 0,
                                         shares = 0,
                                         views = 0,

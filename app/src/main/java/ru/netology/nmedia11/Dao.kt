@@ -18,12 +18,15 @@ interface PostDao {
     @Insert
     fun insert(post: PostEntity)
 
+    @Insert
+    fun insert(posts: List<PostEntity>)
+
     @Query("UPDATE PostEntity SET content = :content WHERE id = :id")
     fun updateContentById(id: Long, content: String)
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun save(post: PostEntity) = if (post.id == 0L) {
-        post.published = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy в hh:mm"))
+//        post.published = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy в hh:mm"))
         insert(post)
     }
     else updateContentById(post.id, post.content)

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/feedFragment"
-        android:name="ru.netology.nmedia11.FeedFragment"
+        android:name="ru.netology.nmedia11.activity.FeedFragment"
         android:label="fragment_feed"
         tools:layout="@layout/fragment_feed" >
         <action
@@ -19,12 +19,12 @@
     </fragment>
     <fragment
         android:id="@+id/editPostFragment"
-        android:name="ru.netology.nmedia11.EditPostFragment"
+        android:name="ru.netology.nmedia11.activity.EditPostFragment"
         android:label="fragment_edit_post"
         tools:layout="@layout/fragment_edit_post" />
     <fragment
         android:id="@+id/onePostFragment"
-        android:name="ru.netology.nmedia11.OnePostFragment"
+        android:name="ru.netology.nmedia11.activity.OnePostFragment"
         android:label="OnePostFragment" >
         <action
             android:id="@+id/action_onePostFragment_to_editPostFragment"

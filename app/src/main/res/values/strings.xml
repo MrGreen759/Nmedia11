@@ -31,4 +31,9 @@
     <string name="remote_channel_description">Notifications from remote server</string>
     <string name="mark_as_read">"Mark as read</string>
     <string name="open_messager">Open in messager</string>
+
+    <string name="error_loading">Something went wrong. Try again later</string>
+    <string name="retry_loading">Retry</string>
+    <string name="empty_posts">No posts. Create a new post, it will appear here</string>
+
 </resources>

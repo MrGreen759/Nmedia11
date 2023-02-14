@@ -17,6 +17,13 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+
+        kapt {
+            arguments {
+                arg("room.schemaLocation", "$projectDir/schemas")
+            }
+        }
+
     }
 
     buildFeatures.viewBinding = true
@@ -25,6 +32,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            manifestPlaceholders.usesCleartextTraffic = false
+        }
+        debug {
+            manifestPlaceholders.usesCleartextTraffic = true
         }
     }
     compileOptions {
@@ -37,19 +48,20 @@ android {
 }
 
 dependencies {
+    implementation 'androidx.room:room-ktx:2.5.0'
     def nav_version = "2.5.3"
-    def room_version = "2.4.3"
+    def room_version = "2.5.0"
 
     implementation "androidx.recyclerview:recyclerview:1.2.1"
     implementation 'androidx.core:core-ktx:1.9.0'
-    implementation 'androidx.appcompat:appcompat:1.5.1'
-    implementation 'com.google.android.material:material:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.6.0'
+    implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     implementation "androidx.activity:activity-ktx:1.6.1"
-    implementation "androidx.fragment:fragment-ktx:1.5.4"
+    implementation "androidx.fragment:fragment-ktx:1.5.5"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.5.1"
     testImplementation "androidx.arch.core:core-testing:2.1.0"
@@ -62,4 +74,5 @@ dependencies {
     implementation "com.google.firebase:firebase-messaging-ktx"
     implementation "com.google.code.gson:gson:2.10.1"
     implementation "com.google.android.gms:play-services-base:18.1.0"
+    implementation "com.squareup.okhttp3:okhttp:4.10.0"
 }
