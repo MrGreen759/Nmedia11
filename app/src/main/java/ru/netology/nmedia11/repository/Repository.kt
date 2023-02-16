@@ -1,12 +1,19 @@
 package ru.netology.nmedia11
 
 interface PostRepository {
-    fun get(): List<Post>
     fun likeById(id: Long)
     fun unLikeById(id: Long)
     fun share(id: Long)
     fun save(post: Post)
     fun remove(id: Long)
+
+    fun getAsync(callback: GetAllCalback)
+
+    interface GetAllCalback {
+        fun onSuccess(posts: List<Post>) {}
+        fun onError(e: Exception)
+    }
+
 }
 
 //class PostRepo: PostRepository {
