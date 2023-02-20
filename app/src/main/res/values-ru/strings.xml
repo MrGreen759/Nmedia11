@@ -25,4 +25,6 @@
     <string name="error_loading">Что-то пошло не так. Попробуйте позже.</string>
     <string name="retry_loading">Повторить</string>
     <string name="empty_posts">Постов нет. Создайте новый пост, он появится здесь.</string>
+    <string name="action_success">Успешно</string>
+    <string name="action_non_success">Что-то пошло не так. Попробуйте позже.</string>
 </resources>

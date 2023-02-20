@@ -2,10 +2,12 @@ package ru.netology.nmedia11
 
 import android.app.Application
 import android.os.Build
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.map
 import ru.netology.nmedia11.repository.PostRepoNet
 import ru.netology.nmedia11.utils.SingleLiveEvent
 import java.io.IOException
@@ -39,48 +41,72 @@ class PostViewModel(application: Application): AndroidViewModel(application) {
     }
 
     fun loadPosts() {
-        thread {
-            // Начинаем загрузку
-            _data.postValue(FeedModel(loading = true))
-            try {
-                // Данные успешно получены
-                val posts = repository.get()
-                FeedModel(posts = posts, empty = posts.isEmpty())
-            } catch (e: IOException) {
-                // Получена ошибка
-                FeedModel(error = true)
-            }.also(_data::postValue)
-        }
+        _data.value = FeedModel(loading = true)
+        repository.getAsync(object : PostRepository.GetAllCalback {
+            override fun onSuccess(posts: List<Post>) {
+                _data.postValue(FeedModel(posts = posts, empty = posts.isEmpty()))
+            }
+            override fun onError(e: Exception) {
+                _data.postValue(FeedModel(error = true))
+            }
+        })
     }
 
-    fun likeById(id: Long) {
-        thread {
-            val old = _data.value?.posts.orEmpty()
-            val current = _data.value?.posts.orEmpty()
-            var needLike = false
+    fun likeById(id: Long): Boolean {
+        val old = _data.value?.posts.orEmpty()
+        val current = _data.value?.posts.orEmpty()
+        var needLike = false
+        var likeResult = false
 
-                for (i in 0..current.size - 1) {
-                    if (current[i].id == id) {
-                        if(current[i].likedByMe) {
-                            --current[i].likes
-                        } else {
-                            ++current[i].likes
-                            needLike = true
-                        }
-                        current[i].likedByMe = !current[i].likedByMe
-                        break
-                    }
+        for (i in 0..current.size - 1) {
+            if (current[i].id == id) {
+                if(current[i].likedByMe) {
+                    --current[i].likes
+                } else {
+                    ++current[i].likes
+                    needLike = true
                 }
-
-            _data.postValue(_data.value?.copy(posts = current))
-
-            try {
-                if (needLike) repository.likeById(id)
-                else repository.unLikeById(id)
-            } catch (e: IOException) {
-                _data.postValue(_data.value?.copy(posts = old))
+                current[i].likedByMe = !current[i].likedByMe
+                break
             }
         }
+
+        _data.postValue(_data.value?.copy(posts = current))
+
+        if (needLike) {
+            repository.likeAsync(id, object : PostRepository.ActionCallback {
+                override fun onSuccess(result: Int) {
+//                    println("------------ result: " + result)
+                    if (result in 200..299) likeResult = true
+                    else _data.postValue(_data.value?.copy(posts = old))
+//                    println("------------ likeResult: " + likeResult)
+                }
+
+                override fun onError(e: Exception) {
+                    _data.postValue(FeedModel(error = true))
+                }
+            })
+        } else {
+            repository.unLikeAsync(id, object : PostRepository.ActionCallback {
+                override fun onSuccess(result: Int) {
+                    if (result in 200..299) likeResult = true
+                    else _data.postValue(_data.value?.copy(posts = old))
+                }
+
+                override fun onError(e: Exception) {
+                    _data.postValue(FeedModel(error = true))
+                }
+            })
+        }
+
+        return likeResult
+
+//        try {
+//            if (needLike) repository.likeById(id)
+//            else repository.unLikeById(id)
+//        } catch (e: IOException) {
+//            _data.postValue(_data.value?.copy(posts = old))
+//        }
     }
 
     fun share(id: Long) {

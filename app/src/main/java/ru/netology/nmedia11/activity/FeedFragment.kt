@@ -1,11 +1,13 @@
 package ru.netology.nmedia11.activity
 
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -39,7 +41,10 @@ class FeedFragment : Fragment() {
             }
 
             override fun onLike(post: Post) {
-                viewModel.likeById(post.id)
+                if (viewModel.likeById(post.id))
+                    Toast.makeText(context, R.string.action_success, Toast.LENGTH_LONG).show()
+                else
+                    Toast.makeText(context, R.string.action_non_success, Toast.LENGTH_LONG).show()
             }
 
             override fun onShare(post: Post) {
