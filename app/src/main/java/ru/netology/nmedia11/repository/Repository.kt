@@ -1,14 +1,12 @@
 package ru.netology.nmedia11
 
-import android.widget.Toast
-
 interface PostRepository {
-    fun get(): List<Post>
+//    fun get(): List<Post>
 //    fun likeById(id: Long)
 //    fun unLikeById(id: Long)
-    fun share(id: Long)
-    fun save(post: Post)
-    fun remove(id: Long)
+//    fun share(id: Long)
+//    fun save(post: Post)
+//    fun remove(id: Long)
 
     fun getAsync(callback: GetAllCalback)
 
@@ -21,9 +19,10 @@ interface PostRepository {
     fun unLikeAsync(id: Long, callback: ActionCallback)
     fun shareAsync(id: Long, callback: ActionCallback)
     fun removeAsync(id: Long, callback: ActionCallback)
+    fun saveAsync(post: Post, callback: ActionCallback)
 
     interface ActionCallback {
-        fun onSuccess(result: Int)
+        fun onSuccess(result: Int) {}
         fun onError(e: Exception)
     }
 
