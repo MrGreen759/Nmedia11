@@ -102,7 +102,8 @@ class OnePostFragment: Fragment() {
                                         likes = 0,
                                         shares = 0,
                                         views = 0,
-                                        video = ""
+                                        video = "",
+                                        attachment = ""
                                     )
                                     viewModel.addAndEdit(epost)
                                     findNavController().navigateUp()

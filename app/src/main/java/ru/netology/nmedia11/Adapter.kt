@@ -83,7 +83,8 @@ class PostViewHolder(
                                     likes = 0,
                                     shares = 0,
                                     views = 0,
-                                    video = ""
+                                    video = "",
+                                    attachment = ""
                                         )
                                 onInteractionListener.onEdit(epost)
                                 true

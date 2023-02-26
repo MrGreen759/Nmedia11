@@ -18,12 +18,14 @@ class PostViewModel(application: Application): AndroidViewModel(application) {
     private val emptyPost = Post (
         id = -1L,
         author = "",
+        authorAvatar = "",
         content = "",
         published = 0L,
         likes = 0,
         shares = 0,
         views = 0,
-        video = ""
+        video = "",
+        attachment = ""
     )
 
     @RequiresApi(Build.VERSION_CODES.O)

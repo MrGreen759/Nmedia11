@@ -5,17 +5,27 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import ru.netology.nmedia11.enumeration.AttachmentType
 
 data class Post(
     val id: Long,
     val author: String,
+    val authorAvatar: String = "",
     val content: String,
     val published: Long,
     var likedByMe: Boolean = false,
     var likes: Int,
     var shares: Int,
     val views: Int,
-    val video: String
+    val video: String,
+    var attachment: String
+//    var attachment: Attachment? = null,
+)
+
+data class Attachment(
+    val url: String,
+    val description: String?,
+    val type: AttachmentType,
 )
 
 //private val emptyPost = Post (
