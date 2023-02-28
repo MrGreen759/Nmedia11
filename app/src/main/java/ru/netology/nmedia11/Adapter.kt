@@ -7,7 +7,6 @@ import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import ru.netology.nmedia11.activity.FeedFragment
 import ru.netology.nmedia11.databinding.PostCardBinding
 import ru.netology.nmedia11.utils.Utils
 
@@ -46,6 +45,7 @@ class PostViewHolder(
         val url = "http://10.0.2.2:10999/avatars/${post.authorAvatar}"
         Glide.with(binding.icon)
             .load(url)
+            .circleCrop()
             .placeholder(R.drawable.ic_loading_100)
             .error(R.drawable.ic_error_100)
             .timeout(10_000)
