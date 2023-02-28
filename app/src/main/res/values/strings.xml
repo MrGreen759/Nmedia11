@@ -36,4 +36,7 @@
     <string name="retry_loading">Retry</string>
     <string name="empty_posts">No posts. Create a new post, it will appear here</string>
 
+    <string name="action_success">Succesfully.</string>
+    <string name="action_non_success">Something went wrong.</string>
+
 </resources>

@@ -2,14 +2,16 @@ package ru.netology.nmedia11
 
 import android.app.Application
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import ru.netology.nmedia11.repository.PostRepoNet
 import ru.netology.nmedia11.utils.SingleLiveEvent
-import java.io.IOException
-import kotlin.concurrent.thread
+
 
 @RequiresApi(Build.VERSION_CODES.O)
 class PostViewModel(application: Application): AndroidViewModel(application) {
@@ -38,91 +40,156 @@ class PostViewModel(application: Application): AndroidViewModel(application) {
         loadPosts()
     }
 
+    // загрузка списка постов
     fun loadPosts() {
-        thread {
-            // Начинаем загрузку
-            _data.postValue(FeedModel(loading = true))
-            try {
-                // Данные успешно получены
-                val posts = repository.get()
-                FeedModel(posts = posts, empty = posts.isEmpty())
-            } catch (e: IOException) {
-                // Получена ошибка
-                FeedModel(error = true)
-            }.also(_data::postValue)
-        }
+        _data.value = FeedModel(loading = true)
+        repository.getAsync(object : PostRepository.GetAllCalback {
+            override fun onSuccess(posts: List<Post>) {
+                _data.postValue(FeedModel(posts = posts, empty = posts.isEmpty()))
+            }
+            override fun onError(e: Exception) {
+                _data.postValue(FeedModel(error = true))
+            }
+        })
     }
 
+    // лайк / дизлайк
     fun likeById(id: Long) {
-        thread {
-            val old = _data.value?.posts.orEmpty()
-            val current = _data.value?.posts.orEmpty()
-            var needLike = false
+        val old = _data.value?.posts.orEmpty()
+        var current = _data.value?.posts?.toList()!! // создаем копию данных
+        var needLike = false
 
-                for (i in 0..current.size - 1) {
-                    if (current[i].id == id) {
-                        if(current[i].likedByMe) {
-                            --current[i].likes
-                        } else {
-                            ++current[i].likes
-                            needLike = true
-                        }
-                        current[i].likedByMe = !current[i].likedByMe
-                        break
+        for (i in 0..current.size - 1) {
+            if (current[i].id == id) {
+                if(current[i].likedByMe) {
+                    --current[i].likes
+                } else {
+                    ++current[i].likes
+                    needLike = true
+                }
+                current[i].likedByMe = !current[i].likedByMe
+                break
+            }
+        }
+
+//        _data.postValue(_data.value?.copy(posts = current.filter { it.id != -100L }))
+        _data.postValue(_data.value?.copy(posts = current))
+
+        if (needLike) {
+
+            // ставим лайк
+            repository.likeAsync(id, object : PostRepository.ActionCallback {
+                override fun onSuccess(result: Int) {
+                    val handler = Handler(Looper.getMainLooper())
+                    if (result in 200..299) {
+                        handler.post { Toast.makeText(getApplication(), "Успешно. Код: " + result, Toast.LENGTH_LONG).show() }
+                    }
+                    else {
+                        _data.postValue(_data.value?.copy(posts = old))
+                        handler.post { Toast.makeText(getApplication(), "Неудачно. Код: " + result, Toast.LENGTH_LONG).show() }
                     }
                 }
 
-            _data.postValue(_data.value?.copy(posts = current))
+                override fun onError(e: Exception) {
+                    _data.postValue(FeedModel(error = true))
+                }
+            })
+        } else {
 
-            try {
-                if (needLike) repository.likeById(id)
-                else repository.unLikeById(id)
-            } catch (e: IOException) {
-                _data.postValue(_data.value?.copy(posts = old))
-            }
+            // снимаем лайк
+            repository.unLikeAsync(id, object : PostRepository.ActionCallback {
+                override fun onSuccess(result: Int) {
+                    val handler = Handler(Looper.getMainLooper())
+                    if (result in 200..299) {
+                        handler.post { Toast.makeText(getApplication(), "Успешно. Код: " + result, Toast.LENGTH_LONG).show() }
+                    }
+                    else {
+                        _data.postValue(_data.value?.copy(posts = old))
+                        handler.post { Toast.makeText(getApplication(), "Неудачно. Код: " + result, Toast.LENGTH_LONG).show() }
+                    }
+                }
+
+                override fun onError(e: Exception) {
+                    _data.postValue(FeedModel(error = true))
+                }
+            })
         }
     }
 
+    // поделиться (репост)
     fun share(id: Long) {
-        thread {
-            val old = _data.value?.posts.orEmpty()
-            val current = _data.value?.posts.orEmpty()
+        val old = _data.value?.posts.orEmpty()
+        var current = _data.value?.posts?.toList()!! // создаем копию данных
 
-            for (i in 0..current.size - 1) {
-                if (current[i].id == id) {
-                    ++current[i].shares
-                    break
+        for (i in 0..current.size - 1) {
+            if (current[i].id == id) {
+                ++current[i].shares
+                break
+            }
+        }
+
+        _data.postValue(_data.value?.copy(posts = current))
+
+        repository.shareAsync(id, object : PostRepository.ActionCallback {
+            override fun onSuccess(result: Int) {
+                val handler = Handler(Looper.getMainLooper())
+                if (result in 200..299) {
+                    handler.post { Toast.makeText(getApplication(), "Успешно. Код: " + result, Toast.LENGTH_LONG).show() }
+                }
+                else {
+                    _data.postValue(_data.value?.copy(posts = old))
+                    handler.post { Toast.makeText(getApplication(), "Неудачно. Код: " + result, Toast.LENGTH_LONG).show() }
                 }
             }
 
-            _data.postValue(_data.value?.copy(posts = current))
-
-            try {
-                repository.share(id)
-            } catch (e: IOException) {
-                _data.postValue(_data.value?.copy(posts = old))
+            override fun onError(e: Exception) {
+                _data.postValue(FeedModel(error = true))
             }
-        }
+        })
     }
 
+    // удаление поста
     fun remove(id: Long) {
-        thread {
-            val old = _data.value?.posts.orEmpty()
-            _data.postValue(_data.value?.copy(posts = _data.value?.posts.orEmpty().filter { it.id != id }))
-            try {
-                repository.remove(id)
-            } catch (e: IOException) {
-                _data.postValue(_data.value?.copy(posts = old))
+        val old = _data.value?.posts.orEmpty()
+        _data.postValue(_data.value?.copy(posts = _data.value?.posts.orEmpty().filter { it.id != id }))
+
+        repository.removeAsync(id, object : PostRepository.ActionCallback {
+            override fun onSuccess(result: Int) {
+                val handler = Handler(Looper.getMainLooper())
+                if (result in 200..299) {
+                    handler.post { Toast.makeText(getApplication(), "Успешно. Код: " + result, Toast.LENGTH_LONG).show() }
+                }
+                else {
+                    _data.postValue(_data.value?.copy(posts = old))
+                    handler.post { Toast.makeText(getApplication(), "Неудачно. Код: " + result, Toast.LENGTH_LONG).show() }
+                }
             }
-        }
+
+            override fun onError(e: Exception) {
+                _data.postValue(FeedModel(error = true))
+            }
+        })
     }
 
+    // сохранить
     fun save() {
         edited.value?.let {
-            thread {
-                repository.save(it)
-                _postCreated.postValue(Unit)
-            }
+            repository.saveAsync(it, object : PostRepository.ActionCallback {
+                override fun onSuccess(result: Int) {
+                    val handler = Handler(Looper.getMainLooper())
+                    if (result in 200..299) {
+                        handler.post { Toast.makeText(getApplication(), "Успешно. Код: " + result, Toast.LENGTH_LONG).show() }
+                    }
+                    else {
+                        handler.post { Toast.makeText(getApplication(), "Неудачно. Код: " + result, Toast.LENGTH_LONG).show() }
+                    }
+                    _postCreated.postValue(Unit)
+                }
+
+                override fun onError(e: Exception) {
+                    _data.postValue(FeedModel(error = true))
+                }
+            })
         }
         edited.value = emptyPost
     }
