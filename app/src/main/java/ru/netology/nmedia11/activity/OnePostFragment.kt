@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import ru.netology.nmedia11.*
 import ru.netology.nmedia11.databinding.FragmentOnePostBinding
 import ru.netology.nmedia11.utils.IdArg
@@ -35,6 +36,13 @@ class OnePostFragment: Fragment() {
 
         viewModel.data.observe(viewLifecycleOwner) { state ->
             val post = state.posts.find { it.id == postId } ?: return@observe
+
+            // по идее, должно загружаться уже из кэша
+            val url = "http://10.0.2.2:10999/avatars/${post.authorAvatar}"
+            Glide.with(binding.icon)
+                .load(url)
+                .transform(RoundedCorners(32))
+                .into(binding.icon)
 
             // слушатель для запуска просмотра видео
             val playVideoListener = OnClickListener{
@@ -61,7 +69,7 @@ class OnePostFragment: Fragment() {
                     ibPlayVideo.visibility = View.VISIBLE
                     val videoId = Uri.parse(post.video).getQueryParameter("v")
                     val thumbnailUri = Uri.parse("https://img.youtube.com/vi/${videoId}/0.jpg")
-                    Glide.with(requireParentFragment()).load(thumbnailUri).into(binding.ivThumbnail) // TODO проверить "with"
+                    Glide.with(requireParentFragment()).load(thumbnailUri).into(binding.ivThumbnail)
                 }
 
                 ibLikes.setOnClickListener {
@@ -102,7 +110,8 @@ class OnePostFragment: Fragment() {
                                         likes = 0,
                                         shares = 0,
                                         views = 0,
-                                        video = ""
+                                        video = "",
+                                        attachment = ""
                                     )
                                     viewModel.addAndEdit(epost)
                                     findNavController().navigateUp()

@@ -9,6 +9,8 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.bumptech.glide.Glide
+import ru.netology.nmedia11.activity.FeedFragment
 import ru.netology.nmedia11.repository.PostRepoNet
 import ru.netology.nmedia11.utils.SingleLiveEvent
 
@@ -18,12 +20,14 @@ class PostViewModel(application: Application): AndroidViewModel(application) {
     private val emptyPost = Post (
         id = -1L,
         author = "",
+        authorAvatar = "",
         content = "",
         published = 0L,
         likes = 0,
         shares = 0,
         views = 0,
-        video = ""
+        video = "",
+        attachment = ""
     )
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -46,6 +50,15 @@ class PostViewModel(application: Application): AndroidViewModel(application) {
         repository.getAsync(object : PostRepository.GetAllCalback {
             override fun onSuccess(posts: List<Post>) {
                 _data.postValue(FeedModel(posts = posts, empty = posts.isEmpty()))
+//                val url = "http://10.0.2.2:10999/avatars/${posts.get(0).authorAvatar}"
+//                Glide.with(FeedFragment.binding.image)
+//                .load(url)
+//                .placeholder(R.drawable.ic_loading_100dp)
+//                .error(R.drawable.ic_error_100dp)
+//                .timeout(10_000)
+//                .into(binding.image)
+//
+
             }
             override fun onError(e: Exception) {
                 _data.postValue(FeedModel(error = true))

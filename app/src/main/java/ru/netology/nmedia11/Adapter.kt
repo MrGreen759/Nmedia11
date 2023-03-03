@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import ru.netology.nmedia11.databinding.PostCardBinding
 import ru.netology.nmedia11.utils.Utils
 
@@ -40,6 +41,15 @@ class PostViewHolder(
     fun bind(post: Post) {
         // слушатель для перехода во фрагмент просмотра одного поста
         val bigClick = View.OnClickListener { onInteractionListener.onPost(post.id) }
+
+        val url = "http://10.0.2.2:10999/avatars/${post.authorAvatar}"
+        Glide.with(binding.icon)
+            .load(url)
+            .circleCrop()
+            .placeholder(R.drawable.ic_loading_100)
+            .error(R.drawable.ic_error_100)
+            .timeout(10_000)
+            .into(binding.icon)
 
         binding.apply {
             author.text = post.author
@@ -83,7 +93,8 @@ class PostViewHolder(
                                     likes = 0,
                                     shares = 0,
                                     views = 0,
-                                    video = ""
+                                    video = "",
+                                    attachment = ""
                                         )
                                 onInteractionListener.onEdit(epost)
                                 true
