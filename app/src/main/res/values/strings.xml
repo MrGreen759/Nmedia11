@@ -13,6 +13,7 @@
     <string name="menu_add">Add post</string>
     <string name="menu_edit">Edit post</string>
     <string name="menu_remove">Remove post</string>
+    <string name="menu_reload">Reload</string>
     <string name="post_text">Post text</string>
     <string name="description_save">Save</string>
     <string name="description_cancel">Cancel</string>
@@ -38,5 +39,8 @@
 
     <string name="action_success">Succesfully.</string>
     <string name="action_non_success">Something went wrong.</string>
+
+    <string name="server_error">Server error. Try again?</string>
+    <string name="buttonCancel">Cancel</string>
 
 </resources>

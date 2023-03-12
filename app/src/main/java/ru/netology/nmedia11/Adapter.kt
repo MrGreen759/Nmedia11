@@ -16,6 +16,7 @@ interface OnInteractionListener {
     fun onShare(post: Post) {}
     fun onRemove(post: Post) {}
     fun onPost(id: Long) {}
+    fun onReload() {}
 }
 
 class PostsAdapter(
@@ -101,6 +102,10 @@ class PostViewHolder(
                             }
                             R.id.edit -> {
                                 onInteractionListener.onEdit(post)
+                                true
+                            }
+                            R.id.reload -> {
+                                onInteractionListener.onReload()
                                 true
                             }
                             else -> false
