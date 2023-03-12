@@ -27,4 +27,7 @@
     <string name="empty_posts">Постов нет. Создайте новый пост, он появится здесь.</string>
     <string name="action_success">Успешно.</string>
     <string name="action_non_success">Что-то пошло не так.</string>
+    <string name="server_error">Ошибка сервера. Попробовать ещё раз?</string>
+    <string name="buttonCancel">Отмена</string>
+    <string name="menu_reload">Перезагрузить</string>
 </resources>

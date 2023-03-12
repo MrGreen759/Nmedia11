@@ -9,8 +9,6 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.bumptech.glide.Glide
-import ru.netology.nmedia11.activity.FeedFragment
 import ru.netology.nmedia11.repository.PostRepoNet
 import ru.netology.nmedia11.utils.SingleLiveEvent
 
@@ -39,9 +37,12 @@ class PostViewModel(application: Application): AndroidViewModel(application) {
     private val _postCreated = SingleLiveEvent<Unit>()
     val postCreated: LiveData<Unit>
         get() = _postCreated
+    var errorOperation = MutableLiveData(0) // номер функции, в которой произошла ошибка
+    var errorPostId = MutableLiveData(-1L)  // id поста, при обработке которого произошла ошибка
 
     init {
         loadPosts()
+        errorOperation.value = 0
     }
 
     // загрузка списка постов
@@ -50,15 +51,6 @@ class PostViewModel(application: Application): AndroidViewModel(application) {
         repository.getAsync(object : PostRepository.GetAllCalback {
             override fun onSuccess(posts: List<Post>) {
                 _data.postValue(FeedModel(posts = posts, empty = posts.isEmpty()))
-//                val url = "http://10.0.2.2:10999/avatars/${posts.get(0).authorAvatar}"
-//                Glide.with(FeedFragment.binding.image)
-//                .load(url)
-//                .placeholder(R.drawable.ic_loading_100dp)
-//                .error(R.drawable.ic_error_100dp)
-//                .timeout(10_000)
-//                .into(binding.image)
-//
-
             }
             override fun onError(e: Exception) {
                 _data.postValue(FeedModel(error = true))
@@ -71,6 +63,7 @@ class PostViewModel(application: Application): AndroidViewModel(application) {
         val old = _data.value?.posts.orEmpty()
         var current = _data.value?.posts?.toList()!! // создаем копию данных
         var needLike = false
+        errorOperation.value = 0
 
         for (i in 0..current.size - 1) {
             if (current[i].id == id) {
@@ -88,49 +81,52 @@ class PostViewModel(application: Application): AndroidViewModel(application) {
 //        _data.postValue(_data.value?.copy(posts = current.filter { it.id != -100L }))
         _data.postValue(_data.value?.copy(posts = current))
 
-        if (needLike) {
+            if (needLike) {
 
-            // ставим лайк
-            repository.likeAsync(id, object : PostRepository.ActionCallback {
-                override fun onSuccess(result: Int) {
-                    val handler = Handler(Looper.getMainLooper())
-                    if (result in 200..299) {
-                        handler.post { Toast.makeText(getApplication(), "Успешно. Код: " + result, Toast.LENGTH_LONG).show() }
+                // ставим лайк
+                repository.likeAsync(id, object : PostRepository.ActionCallback {
+                    override fun onSuccess(result: Int) {
+                        val handler = Handler(Looper.getMainLooper())
+                        if (result in 200..299) {
+                            handler.post { Toast.makeText(getApplication(),"Успешно. Код: " + result, Toast.LENGTH_LONG).show() }
+                        } else {
+                            _data.postValue(_data.value?.copy(posts = old))
+                            handler.post { Toast.makeText(getApplication(),"Неудачно. Код: " + result, Toast.LENGTH_LONG).show() }
+                            errorOperation.postValue(1)
+                            errorPostId.postValue(id)
+                        }
                     }
-                    else {
-                        _data.postValue(_data.value?.copy(posts = old))
-                        handler.post { Toast.makeText(getApplication(), "Неудачно. Код: " + result, Toast.LENGTH_LONG).show() }
-                    }
-                }
 
-                override fun onError(e: Exception) {
-                    _data.postValue(FeedModel(error = true))
-                }
-            })
-        } else {
-
-            // снимаем лайк
-            repository.unLikeAsync(id, object : PostRepository.ActionCallback {
-                override fun onSuccess(result: Int) {
-                    val handler = Handler(Looper.getMainLooper())
-                    if (result in 200..299) {
-                        handler.post { Toast.makeText(getApplication(), "Успешно. Код: " + result, Toast.LENGTH_LONG).show() }
+                    override fun onError(e: Exception) {
+                        _data.postValue(FeedModel(error = true))
                     }
-                    else {
-                        _data.postValue(_data.value?.copy(posts = old))
-                        handler.post { Toast.makeText(getApplication(), "Неудачно. Код: " + result, Toast.LENGTH_LONG).show() }
-                    }
-                }
+                })
+            } else {
 
-                override fun onError(e: Exception) {
-                    _data.postValue(FeedModel(error = true))
-                }
-            })
+                // снимаем лайк
+                repository.unLikeAsync(id, object : PostRepository.ActionCallback {
+                    override fun onSuccess(result: Int) {
+                        val handler = Handler(Looper.getMainLooper())
+                        if (result in 200..299) {
+                            handler.post { Toast.makeText(getApplication(),"Успешно. Код: " + result, Toast.LENGTH_LONG).show() }
+                        } else {
+                            _data.postValue(_data.value?.copy(posts = old))
+                            handler.post { Toast.makeText(getApplication(),"Неудачно. Код: " + result, Toast.LENGTH_LONG).show() }
+                            errorOperation.postValue(1)
+                            errorPostId.postValue(id)
+                        }
+                    }
+
+                    override fun onError(e: Exception) {
+                        _data.postValue(FeedModel(error = true))
+                    }
+                })
         }
     }
 
     // поделиться (репост)
     fun share(id: Long) {
+        errorOperation.value = 0
         val old = _data.value?.posts.orEmpty()
         var current = _data.value?.posts?.toList()!! // создаем копию данных
 
@@ -152,6 +148,8 @@ class PostViewModel(application: Application): AndroidViewModel(application) {
                 else {
                     _data.postValue(_data.value?.copy(posts = old))
                     handler.post { Toast.makeText(getApplication(), "Неудачно. Код: " + result, Toast.LENGTH_LONG).show() }
+                    errorOperation.postValue(2)
+                    errorPostId.postValue(id)
                 }
             }
 
@@ -163,6 +161,7 @@ class PostViewModel(application: Application): AndroidViewModel(application) {
 
     // удаление поста
     fun remove(id: Long) {
+        errorOperation.value = 0
         val old = _data.value?.posts.orEmpty()
         _data.postValue(_data.value?.copy(posts = _data.value?.posts.orEmpty().filter { it.id != id }))
 
@@ -175,6 +174,8 @@ class PostViewModel(application: Application): AndroidViewModel(application) {
                 else {
                     _data.postValue(_data.value?.copy(posts = old))
                     handler.post { Toast.makeText(getApplication(), "Неудачно. Код: " + result, Toast.LENGTH_LONG).show() }
+                    errorOperation.postValue(3)
+                    errorPostId.postValue(id)
                 }
             }
 

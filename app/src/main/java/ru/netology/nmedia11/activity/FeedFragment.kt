@@ -31,6 +31,8 @@ class FeedFragment : Fragment() {
             container,
             false
         )
+        var errOp = 0
+        var errId = 0L
 
         val viewModel: PostViewModel by viewModels(ownerProducer = ::requireParentFragment)
         val adapter = PostsAdapter (object : OnInteractionListener {
@@ -63,6 +65,10 @@ class FeedFragment : Fragment() {
                     Bundle().apply { idArg = id })
             }
 
+            override fun onReload() {
+                viewModel.loadPosts()
+            }
+
         })
 
         binding.list.adapter = adapter
@@ -84,8 +90,28 @@ class FeedFragment : Fragment() {
                 Bundle().apply { textArg = post.content })
         }
 
+        viewModel.errorPostId.observe(viewLifecycleOwner){ errId = it}
+        viewModel.errorOperation.observe(viewLifecycleOwner) {
+            if(it!=0) {
+                binding.errorGroup.isVisible = true
+                errOp = it
+            }
+        }
+
         binding.retryButton.setOnClickListener {
-            viewModel.loadPosts()
+            when (errOp) {
+                0 -> viewModel.loadPosts()
+                1 -> viewModel.likeById(errId)
+                2 -> viewModel.share(errId)
+                3 -> viewModel.remove(errId)
+            }
+        }
+
+        binding.cancelButton.setOnClickListener {
+            binding.errorGroup.isVisible = false
+            viewModel.errorOperation.value = 0
+            errOp = 0
+            errId = 0
         }
 
         return binding.root

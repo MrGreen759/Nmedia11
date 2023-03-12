@@ -16,6 +16,13 @@
         <action
             android:id="@+id/action_feedFragment_to_onePostFragment"
             app:destination="@id/onePostFragment" />
+        <action
+            android:id="@+id/action_feedFragment_to_serverErrorFragment"
+            app:destination="@id/serverErrorFragment" />
+        <argument
+            android:name="ChoiceArg"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
     <fragment
         android:id="@+id/editPostFragment"
@@ -29,5 +36,14 @@
         <action
             android:id="@+id/action_onePostFragment_to_editPostFragment"
             app:destination="@id/editPostFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/serverErrorFragment"
+        android:name="ru.netology.nmedia11.activity.ServerErrorFragment"
+        android:label="fragment_server_error"
+        tools:layout="@layout/fragment_server_error" >
+        <action
+            android:id="@+id/action_serverErrorFragment_to_feedFragment"
+            app:destination="@id/feedFragment" />
     </fragment>
 </navigation>

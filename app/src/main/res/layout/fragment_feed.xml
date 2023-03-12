@@ -7,11 +7,12 @@
     android:layout_height="match_parent"
     tools:context=".activity.FeedFragment">
 
-    <TextView
+    <Button
         android:id="@+id/retryTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/common_spacing"
+        android:background="#673AB7"
         android:text="@string/error_loading"
         app:layout_constraintBottom_toTopOf="@+id/retryButton"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,14 +27,24 @@
         android:text="@string/retry_loading"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/cancelButton"
         app:layout_constraintTop_toBottomOf="@id/retryTitle" />
+
+    <Button
+        android:id="@+id/cancelButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/buttonCancel"
+        app:layout_constraintBottom_toBottomOf="@id/retryButton"
+        app:layout_constraintEnd_toStartOf="@id/retryButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/retryButton" />
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/errorGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="retryTitle,retryButton" />
+        app:constraint_referenced_ids="retryTitle,retryButton,cancelButton" />
 
     <TextView
         android:id="@+id/emptyText"
@@ -63,6 +74,8 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/post_card" />
+        tools:listitem="@layout/post_card" >
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
